@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 public class Move : Unit {
 	public float m_speed;
 	public float m_anglespeed;
+	public GameObject bw;
+	public GameObject gw;
+	public GameObject rw;
+	private int c = 0;
 
 
 	void Start () {
@@ -43,10 +47,26 @@ public class Move : Unit {
 
 	public void OnTriggerEnter2D(Collider2D coll){
 		if(coll.gameObject.tag  == "harmful"){
-			Applydamage (damages);
+			Unit u = coll.GetComponent<Unit> ();
+			if(u != null){
+			u.Applydamage (damages);
+			}
 		}
 		if(coll.gameObject.tag == "Finish"){
+			c += 1;
 			health += 5;
+		}
+		if(coll.gameObject.tag == "bdna"){
+			Instantiate (bw, transform.position, Quaternion.identity);
+			Destroy (gameObject);
+		}
+		if(coll.gameObject.tag == "gdna"){
+			Instantiate (gw, transform.position, Quaternion.identity);
+			Destroy (gameObject);
+		}
+		if(coll.gameObject.tag == "rdna"){
+			Instantiate (rw, transform.position, Quaternion.identity);
+			Destroy (gameObject);
 		}
 	}
 

@@ -2,18 +2,27 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class over : Unit {
-
-	// Use this for initialization
+public class over : MonoBehaviour {
+	private GameObject camer;
+	private GameObject camer1;
+	private GameObject[] player1;
+	
 	void Start () {
-		if(gameObject == null){
-			SceneManager.LoadScene ("gameover");
-		}
-
+		camer = GameObject.Find ("Main Camera");
+		camer1 = GameObject.Find ("Camera");
+		player1 = GameObject.FindGameObjectsWithTag ("Player");
+		camer1.SetActive (false);
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
+		emety ();
 	
+	}
+	void emety(){
+		if(player1 == null){
+			camer.SetActive (false);
+			camer1.SetActive (true);
+			Time.timeScale = 0;
+		}
 	}
 }

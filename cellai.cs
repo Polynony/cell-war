@@ -4,7 +4,7 @@ using System.Collections;
 public class cellai : Unit {
 	public float speed;
 	private float tt = 0;
-	private Vector2 curll = Vector2.zero;
+	private int a = 0;
 
 
 	void Start () {
@@ -16,31 +16,41 @@ public class cellai : Unit {
 	}
 	void FixedUpdate(){
 		
-		movecell ();
+		 movecell ();
 
 	}
-	void movecell(){
-		float x = Random.Range (-21, 21);
-		float y = Random.Range (-10, 10);
-		Vector2 lastpos = new Vector2 (x, y);
-		Vector2 currentpos = new Vector2 (x, y);
-		Vector2 wu = Vector2.Lerp (lastpos, currentpos, speed * Time.deltaTime);
-		wu = wu.normalized;
-		if (tt >= 0.7) {
-			transform.Translate (wu * speed * Time.deltaTime, Space.World);
+	public Vector2 movecell(){
+		if (tt >= 0.3) {
+			float x = Random.Range (-21, 21);
+			float y = Random.Range (-10, 10);
+			Vector2 lastpos = new Vector2 (x, y);
+			Vector2 curren = new Vector2 (x, y);
+			transform.position = Vector2.SmoothDamp (transform.position, curren, ref lastpos, speed, Mathf.Infinity, Time.deltaTime);
 			tt = 0;
-		} else {
+		}  else {
 			tt += Time.deltaTime;
 		}
+		float x1 = Random.Range (-21, 21);
+		float y1 = Random.Range (-10, 10);
+		Vector2 wu = new Vector2 (x1, y1);
+		return wu;
 	}
 
-	public void OnTriggerEnter2D(Collider2D coll){
+	void OnTriggerEnter2D(Collider2D coll){
 		if(coll.gameObject.tag == "Player"){
-			Applydamage (damages);
+			Unit u = coll.GetComponent<Unit> ();
+			if(u != null){
+			u.Applydamage (damages);
+			}
 		}
 		if(coll.gameObject.tag == "Finish"){
+			a += 1;
 			health += 5;
 		}
+	}
+	void OnCollisionEnter2D(Collider2D cols){
+		Rigidbody2D r = cols.GetComponent<Rigidbody2D> ();
+		r.AddForceAtPosition (movecell (), transform.position);
 	}
 
 }

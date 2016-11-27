@@ -2,9 +2,7 @@
 using System.Collections;
 
 public class camera : MonoBehaviour {
-	public Transform target;
-
-
+	private GameObject target;
 
 	void Awake(){
 
@@ -12,7 +10,8 @@ public class camera : MonoBehaviour {
 	
 
 	void LateUpdate () {
-		transform.position = target.position;
+		target = GameObject.FindGameObjectWithTag ("Player");
+		transform.position = target.transform.position;
 	
 	}
 }
