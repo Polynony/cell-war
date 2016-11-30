@@ -8,7 +8,7 @@ public class Move : Unit {
 	public GameObject bw;
 	public GameObject gw;
 	public GameObject rw;
-	private int c = 0;
+	private int score = 0;
 
 
 	void Start () {
@@ -46,14 +46,13 @@ public class Move : Unit {
 	}
 
 	public void OnTriggerEnter2D(Collider2D coll){
-		if(coll.gameObject.tag  == "harmful"){
 			Unit u = coll.GetComponent<Unit> ();
 			if(u != null){
 			u.Applydamage (damages);
 			}
-		}
+
 		if(coll.gameObject.tag == "Finish"){
-			c += 1;
+			score += 1;
 			health += 5;
 		}
 		if(coll.gameObject.tag == "bdna"){

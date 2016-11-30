@@ -14,7 +14,6 @@ public class dnaai : cellai {
 	}
 	void OnTriggerEnter2D(Collider2D dna){
 		if (dna.gameObject.tag == "Player") {
-			Debug.Log ("oooo");
 			Destroy (gameObject);
 		} else {
 			des ();

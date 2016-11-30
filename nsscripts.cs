@@ -2,12 +2,12 @@
 using System.Collections;
 
 public class nsscripts : cellai {
-	public float dam;
 	private float time = 0;
 	private GameObject[] number;
 	public GameObject b1;
 	public GameObject b2;
 	public GameObject b3;
+	private float c = 0.8f;
 
 	void Start () {
 	
@@ -17,29 +17,27 @@ public class nsscripts : cellai {
 	
 		movecell ();
 		variation ();
+		breed ();
 	}
 	void OnTriggerEnter2D(Collider2D colli){
 		Unit u = colli.GetComponent<Unit> ();
-		if(u != null){
-			u.Applydamage (dam);
-		}
 	}
 	void variation(){
 		float a = Random.Range (0, 10);
-		float c = 0.8f;
 		if(size() >= 5){
-			c += Time.deltaTime * 14;
+			c += (size () - 5) * 0.1f;//c is the current mutation probability
 			if(a <= c){
 				varion ();
+			}
+			if(c > 8){
+				c = 8;
 			}
 		}
 		
 	}
-	void breed(){
-	}
 	float size(){
 		number = GameObject.FindGameObjectsWithTag ("not");
-		float s = number.Length;
+		int s = number.Length;
 		return s;
 	}
 	void varion(){
